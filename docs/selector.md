@@ -12,12 +12,10 @@
     <p>这是另一个段落。</p>
     <div>这是一个 div 元素。</div>
   '
-css='
-  p {
+  css='p {
     color: blue;
     font-size: 16px;
-  }
-'
+  }'
 />
 
 ### 类选择器
