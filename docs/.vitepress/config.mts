@@ -16,6 +16,7 @@ export default defineConfig({
         text: "Examples",
         items: [
           { text: "CSS selector", link: "/selector" },
+          { text: "CORS", link: "/cors" },
           // { text: "Markdown Examples", link: "/markdown-examples" },
           // { text: "Runtime API Examples", link: "/api-examples" },
         ],
