@@ -14,3 +14,10 @@ build/
 # Ignore system files
 .DS_Store
 Thumbs.db
+
+# VitePress cache
+docs/.vitepress/cache/
+
+# VitePress build output
+docs/.vitepress/build/
+
