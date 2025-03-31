@@ -18,6 +18,7 @@ export default defineConfig({
           { text: "CSS selector", link: "/selector" },
           { text: "CORS", link: "/cors" },
           { text: "cross-origin-request", link: "/cross-origin-request" },
+          { text: "defer、async", link: "/defer-async" },
           // { text: "Markdown Examples", link: "/markdown-examples" },
           // { text: "Runtime API Examples", link: "/api-examples" },
         ],
