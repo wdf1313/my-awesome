@@ -122,4 +122,90 @@ div {
 
 ## 图片和媒体的响应式处理
 
-### 
+#### CSS 控制缩放
+
+确保图片始终不超过容器宽度保持比例：
+
+```css
+img {
+  max-width: 100%;
+  height: auto
+}
+```
+
+#### 高分辨率屏幕适配
+
+使用 sreset 提供多分辨率图片，浏览器根据设备像素比选择：
+
+```html
+<img src="image-1x.jpg" srcset="image-2x.jpg 2x, image-3x.jpg 3x" alt="示例图片">
+```
+提供不同分辨率的图片，让浏览器根据设备像素比（DPR）自动选择。
+
+- image-2x.jpg 2x：当设备 DPR ≥ 2（如 Retina 屏）时加载此高清图。
+
+- image-3x.jpg 3x：当设备 DPR ≥ 3（如超高清屏）时加载此更高清图。
+
+#### 基于视口宽度的适配 srcset + sizes
+
+根据设备宽度自动选择最佳图片，结合 sizes 定义布局中的图片显示宽度
+
+```html
+<img src="small.jpg"
+     srcset="medium.jpg 1000w, large.jpg 2000w"
+     sizes="(max-width: 600px) 100vw, 50vw"
+     alt="响应式图片">
+```
+` srcset="medium.jpg 1000w, large.jpg 2000w"` 提供不同尺寸的图片，并告诉浏览器他们的实际宽度（w = 像素宽度）。
+
+`medium.jpg 1000w` 实际宽度是 1000 像素，`large.jpg 2000w` 实际宽度是 2000 像素。
+
+> 如果布局宽度是 `500px`，且设备 DPR = 1 浏览器可能会选择 `medium.jpg` 因为 1000w 足够覆盖 500px * 1。  
+> 如果布局宽度是 1000px 且设备 DPR = 2 浏览器可能选择 `large.jpg`，需要 1000px * 2 = 2000px。
+
+`sizes="(max-width: 600px) 100vw, 50vw"` 定义图片在不同视口宽度下的布局宽度
+
+`(max-width: 600px) 100vw, 50vw`：如果屏幕宽度 ≤ 600px，图片占据 100% 视口宽度（100vw）。否则（屏幕宽度 > 600px），图片占据 50% 视口宽度。
+
+> 手机（375px 宽）：sizes 匹配 100vw → 布局宽度 = 375px。浏览器可能选择 medium.jpg（1000w 足够覆盖 375px × 2 DPR = 750px）。  
+> 平板（768px 宽）：sizes 匹配 50vw → 布局宽度 = 384px。浏览器可能选择 medium.jpg（1000w 足够覆盖 384px × 2 DPR = 768px）。  
+> 桌面（1200px 宽）：sizes 匹配 50vw → 布局宽度 = 600px。如果 DPR=1，可能选择 medium.jpg（1000w > 600px），如果 DPR=2，可能选择 large.jpg（2000w > 1200px）。 
+
+#### `<Picture>` Art Direction 艺术指导
+
+`picture` 元素允许开发者根据不同的设备屏幕尺寸（通过媒体查询）提供不同的图片资源，从而实现**艺术指导 (Art Direction)**
+
+```html
+<picture>
+  <source media="(min-width: 1200px)" srcset="desktop-large.jpg">
+  <source media="(min-width: 768px)" srcset="tablet.jpg">
+  <img src="mobile.jpg" alt="自适应图片">
+</picture>
+```
+
+`<picture>` 元素作为容器，包裹多个 `<source>` 和一个默认的 `<img>`，让浏览器根据条件选择最合适的图片。
+
+每个 `<source>` 定义了一个图片候选，浏览器会从上到下匹配，使用第一个符合条件的 `<source>` 的图片。
+
+`<source media="(min-width: 1200px)" srcset="desktop-large.jpg">`
+
+- media="(min-width: 1200px)"：媒体查询，匹配 屏幕宽度 ≥ 1200px 的设备（如大桌面显示器）。
+
+- srcset="desktop-large.jpg"：符合条件的设备加载 desktop-large.jpg（通常是高分辨率、宽屏优化的图片）。
+
+`<source media="(min-width: 768px)" srcset="tablet.jpg">`
+
+- media="(min-width: 768px)"：匹配 屏幕宽度 ≥ 768px 但 < 1200px 的设备（如平板或小桌面）。
+
+- srcset="tablet.jpg"：加载 tablet.jpg（可能是中等尺寸、适合横屏的图片）。
+
+
+
+
+
+
+
+
+
+
+
