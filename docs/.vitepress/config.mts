@@ -20,6 +20,7 @@ export default defineConfig({
           { text: "cross origin request", link: "/cross-origin-request" },
           { text: "defer、async", link: "/defer-async" },
           { text: "responsive layout", link: "/responsive-layout" },
+          { text: "closure", link: "/closure" },
           // { text: "Markdown Examples", link: "/markdown-examples" },
           // { text: "Runtime API Examples", link: "/api-examples" },
         ],
