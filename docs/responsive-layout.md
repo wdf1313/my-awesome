@@ -9,7 +9,7 @@
 ```
 该 meta 标签告诉浏览器使用设备的宽度作为视口宽度，并且初始缩放比例为 1.0。
 
-### 媒体查询 Media Queries
+## 媒体查询 Media Queries
 
 仅在浏览器和设备的环境与你指定的规则相匹配的时候 CSS 才会真的被应用
 
@@ -133,9 +133,9 @@ img {
 }
 ```
 
-#### 高分辨率屏幕适配
+#### 高分辨率屏幕适配 srcset
 
-使用 sreset 提供多分辨率图片，浏览器根据设备像素比选择：
+使用 `srcset` 提供多分辨率图片，浏览器根据设备像素比选择：
 
 ```html
 <img src="image-1x.jpg" srcset="image-2x.jpg 2x, image-3x.jpg 3x" alt="示例图片">
@@ -158,7 +158,9 @@ img {
 ```
 ` srcset="medium.jpg 1000w, large.jpg 2000w"` 提供不同尺寸的图片，并告诉浏览器他们的实际宽度（w = 像素宽度）。
 
-`medium.jpg 1000w` 实际宽度是 1000 像素，`large.jpg 2000w` 实际宽度是 2000 像素。
+- `medium.jpg 1000w` 实际宽度是 1000 像素
+
+- `large.jpg 2000w` 实际宽度是 2000 像素。
 
 > 如果布局宽度是 `500px`，且设备 DPR = 1 浏览器可能会选择 `medium.jpg` 因为 1000w 足够覆盖 500px * 1。  
 > 如果布局宽度是 1000px 且设备 DPR = 2 浏览器可能选择 `large.jpg`，需要 1000px * 2 = 2000px。
