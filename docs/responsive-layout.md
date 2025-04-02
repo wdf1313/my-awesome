@@ -191,15 +191,15 @@ img {
 
 `<source media="(min-width: 1200px)" srcset="desktop-large.jpg">`
 
-- media="(min-width: 1200px)"：媒体查询，匹配 屏幕宽度 ≥ 1200px 的设备（如大桌面显示器）。
+- `media="(min-width: 1200px)"`：媒体查询，匹配 屏幕宽度 ≥ 1200px 的设备（如大桌面显示器）。
 
-- srcset="desktop-large.jpg"：符合条件的设备加载 desktop-large.jpg（通常是高分辨率、宽屏优化的图片）。
+- `srcset="desktop-large.jpg"`：符合条件的设备加载 desktop-large.jpg（通常是高分辨率、宽屏优化的图片）。
 
 `<source media="(min-width: 768px)" srcset="tablet.jpg">`
 
-- media="(min-width: 768px)"：匹配 屏幕宽度 ≥ 768px 但 < 1200px 的设备（如平板或小桌面）。
+- `media="(min-width: 768px)"`：匹配 屏幕宽度 ≥ 768px 但 < 1200px 的设备（如平板或小桌面）。
 
-- srcset="tablet.jpg"：加载 tablet.jpg（可能是中等尺寸、适合横屏的图片）。
+- `srcset="tablet.jpg"`：加载 tablet.jpg（可能是中等尺寸、适合横屏的图片）。
 
 
 
