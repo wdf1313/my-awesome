@@ -21,6 +21,8 @@ export default defineConfig({
           { text: "defer、async", link: "/defer-async" },
           { text: "responsive layout", link: "/responsive-layout" },
           { text: "closure", link: "/closure" },
+          { text: "functional-programming", link: "/functional-programming" },
+          { text: "js-data-type", link: "/js-data-type" },
           // { text: "Markdown Examples", link: "/markdown-examples" },
           // { text: "Runtime API Examples", link: "/api-examples" },
         ],
