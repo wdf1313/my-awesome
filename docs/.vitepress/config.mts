@@ -24,6 +24,7 @@ export default defineConfig({
           { text: "functional-programming", link: "/functional-programming" },
           { text: "js-data-type", link: "/js-data-type" },
           { text: "scope", link: "/scope" },
+          { text: "var、let、const", link: "/var-let-const" },
           // { text: "Markdown Examples", link: "/markdown-examples" },
           // { text: "Runtime API Examples", link: "/api-examples" },
         ],
