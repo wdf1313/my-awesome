@@ -23,6 +23,7 @@ export default defineConfig({
           { text: "closure", link: "/closure" },
           { text: "functional-programming", link: "/functional-programming" },
           { text: "js-data-type", link: "/js-data-type" },
+          { text: "scope", link: "/scope" },
           // { text: "Markdown Examples", link: "/markdown-examples" },
           // { text: "Runtime API Examples", link: "/api-examples" },
         ],
