@@ -13,21 +13,49 @@ export default defineConfig({
 
     sidebar: [
       {
-        text: "Examples",
+        text: "HTML",
+        link: "/html",
+        items: [{ text: "defer、async", link: "/html/defer-async" }],
+      },
+      {
+        text: "CSS",
         items: [
-          { text: "CSS selector", link: "/selector" },
-          { text: "CORS", link: "/cors" },
-          { text: "cross origin request", link: "/cross-origin-request" },
-          { text: "defer、async", link: "/defer-async" },
-          { text: "responsive layout", link: "/responsive-layout" },
-          { text: "closure", link: "/closure" },
-          { text: "functional-programming", link: "/functional-programming" },
-          { text: "js-data-type", link: "/js-data-type" },
-          { text: "scope", link: "/scope" },
-          { text: "var、let、const", link: "/var-let-const" },
+          { text: "css selector", link: "/css/selector" },
+          { text: "responsive layout", link: "/css/responsive-layout" },
+        ],
+      },
+      {
+        text: "JS",
+        items: [
+          { text: "date-type", link: "/js/data-type" },
+          { text: "var、let、const", link: "/js/var-let-const" },
+          { text: "scope", link: "/js/scope" },
+          { text: "closure", link: "/js/closure" },
+          {
+            text: "functional-programming",
+            link: "/js/functional-programming",
+          },
           // { text: "Markdown Examples", link: "/markdown-examples" },
           // { text: "Runtime API Examples", link: "/api-examples" },
         ],
+      },
+      {
+        text: "Frontend Engineer",
+        items: [{ text: "git", link: "/enginner/git" }],
+      },
+      {
+        text: "Network",
+        items: [
+          { text: "CORS", link: "/network/cors" },
+          {
+            text: "cross origin request",
+            link: "/network/cross-origin-requests",
+          },
+        ],
+      },
+      {
+        text: "Bugs",
+        items: [{ text: "setTimeout-error", link: "/bugs/setTimeout-error" }],
       },
     ],
 
@@ -35,4 +63,5 @@ export default defineConfig({
       { icon: "github", link: "https://github.com/vuejs/vitepress" },
     ],
   },
+  srcDir: "src",
 })
