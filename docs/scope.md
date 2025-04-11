@@ -38,3 +38,19 @@ if (true) {
 }
 console.log(blockScoped); // 报错
 ```
+
+### 模块作用域 Module Scope
+
+每个 .js 模块文件都有自己独立的作用域，模块内声明的变量、函数、类默认只在模块内可见。
+
+必须显示使用 `export` 导出，其它模块使用 `import` 导入才能使用。
+
+```js
+// module.js
+export const publicVar = '我是公开变量';
+export function publicFunc() {}
+```
+
+
+
+
