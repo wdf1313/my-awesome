@@ -41,7 +41,10 @@ export default defineConfig({
       },
       {
         text: "Frontend Engineer",
-        items: [{ text: "git", link: "/enginner/git" }],
+        items: [
+          { text: "git", link: "/enginner/git" },
+          { text: "webpack loader", link: "/enginner/webpack-loader" },
+        ],
       },
       {
         text: "Network",
