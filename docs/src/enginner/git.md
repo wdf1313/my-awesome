@@ -2,6 +2,17 @@
 
 结合实际开发中遇到的场景问题，介绍各种命令的使用
 
+
+## git 各个工作区
+
+- 工作区 Working Directory：电脑上实际的文件
+
+- 暂存区 Staging Area/Index：通过 `git add` 命令将文件从工作区添加到暂存区。记录了下次提交时要保存的文件更改
+
+- 本地仓库 Local Repository：通过 `git commit` 命令将暂存区的内容提交到本地仓库，包含了项目所有历史记录和分支信息，有完整的版本控制。
+
+- 远程仓库 Remote Repository：位于远程服务器上（如 GitLab、GitHub），通过 `git push` 将本地仓库的内容推送到远程仓库。通过 `git pull` 将远程仓库的内容拉取到本地。
+
 ## 修改最新提交 message
 
 `git commit --amend` 打开 vim 编译器，修改提交信息。
