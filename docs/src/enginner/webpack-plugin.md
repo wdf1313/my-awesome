@@ -45,12 +45,12 @@ DefinePlugin 是 Webpack 内置插件，用于在**编译阶段**创建全局常
 对字符串始终使用 `JSON.stringify()`，否则会作为变量名解析。
 
 ```js
-import webpack from 'webpack'
+import webpack from "webpack"
 
 plugins: [
   new Webpack.DefinePlugin({
-    "API_URL": JSON.stringify("https://api.example.com")
-  })
+    API_URL: JSON.stringify("https://api.example.com"),
+  }),
 ]
 ```
 
@@ -58,18 +58,61 @@ plugins: [
 
 webpack 5+ 已内置为 `output.clean`，在每次构建前清理 `optput` 目录
 
-### SplitChunksPlugin 
+### SplitChunksPlugin
 
 `SplitChunksPlugin` 是 Webpack 内置的代码分割器，用于优化代码拆分（例如提取公共依赖，拆分异步代码块等），减少重复代码，提升缓存利用率。
 
 ```js
 optimization: {
   splitChunks: {
-    chunks: 'all', // 所有模块进行拆分
-  }
+    chunks: 'async',
+    minSize: 20000,
+    minRemainingSize: 0,
+    minChunks: 1,
+    maxAsyncRequests: 30,
+    maxInitialRequests: 30,
+    enforceSizeThreshold: 50000,
+    cacheGroups: {
+      defaultVendors: {
+        test: /[\\/]node_modules[\\/]/,
+        priority: -10,
+        reuseExistingChunk: true,
+      },
+      default: {
+        minChunks: 2,
+        priority: -20,
+        reuseExistingChunk: true,
+      },
+    },
+  },
 }
 ```
-### HotModuleReplacementPlugin 
+
+### TerserPlugin 
+
+TerserPlugin 是 WebPack 中用于压缩和优化 JavaScript 代码的核心插件。核心功能：
+
+TODO: xxx
+
+
+```js
+optimization: {
+  minimizer: [new TerserPlugin({
+    parallel: true, // 使用多进程并行运行
+    terserOptions: {
+      compress: {
+        drop_console: true, // 移除console
+        drop_debugger: true, // 移除debugger
+      },
+      output: {
+        comments: false, // 移除注释
+      },
+    },
+  })],
+}
+```
+
+### HotModuleReplacementPlugin
 
 webpack 内置，启动模块热更新
 
@@ -84,6 +127,7 @@ devServer: {
 可视化分析打包体积 `npm install --save-dev webpack-bundle-analyzer`
 
 每个矩阵的大小表示文件在打包后的大小
+
 - 左侧面板：显示生成的 bundle 文件
 - 主视图：显示选中 bundle 的详细组成
   - start ：原始文件大小（未经 webpack 处理）
@@ -91,8 +135,8 @@ devServer: {
   - Gzipped：经过 gzip 压缩后的文件大小
 
 通过分析报告可以：
+
 - 识别过大依赖：查找占用空间异常大的第三方库，考虑使用更轻量级的替代方案
 - 检查重复依赖：查看是否有一个库被多次打包，使用 webpack 的 `splitChunks` 优化
 - 分析代码分割效果：检查按需加载的代码是否合理分割，优化分割策略减少初始化加载时间
 - 识别未使用的代码：查找从未被引用的模块，使用 `Tree Shaking` 删除无用代码
-
