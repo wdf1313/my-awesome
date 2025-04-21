@@ -58,60 +58,6 @@ plugins: [
 
 webpack 5+ 已内置为 `output.clean`，在每次构建前清理 `optput` 目录
 
-### SplitChunksPlugin
-
-`SplitChunksPlugin` 是 Webpack 内置的代码分割器，用于优化代码拆分（例如提取公共依赖，拆分异步代码块等），减少重复代码，提升缓存利用率。
-
-```js
-optimization: {
-  splitChunks: {
-    chunks: 'async',
-    minSize: 20000,
-    minRemainingSize: 0,
-    minChunks: 1,
-    maxAsyncRequests: 30,
-    maxInitialRequests: 30,
-    enforceSizeThreshold: 50000,
-    cacheGroups: {
-      defaultVendors: {
-        test: /[\\/]node_modules[\\/]/,
-        priority: -10,
-        reuseExistingChunk: true,
-      },
-      default: {
-        minChunks: 2,
-        priority: -20,
-        reuseExistingChunk: true,
-      },
-    },
-  },
-}
-```
-
-### TerserPlugin 
-
-TerserPlugin 是 WebPack 中用于压缩和优化 JavaScript 代码的核心插件。核心功能：
-
-TODO: xxx
-
-
-```js
-optimization: {
-  minimizer: [new TerserPlugin({
-    parallel: true, // 使用多进程并行运行
-    terserOptions: {
-      compress: {
-        drop_console: true, // 移除console
-        drop_debugger: true, // 移除debugger
-      },
-      output: {
-        comments: false, // 移除注释
-      },
-    },
-  })],
-}
-```
-
 ### HotModuleReplacementPlugin
 
 webpack 内置，启动模块热更新
