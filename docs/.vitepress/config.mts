@@ -40,6 +40,10 @@ export default defineConfig({
         ],
       },
       {
+        text: "Vue",
+        items: [{ text: "reactivity", link: "/vue/reactivity" }],
+      },
+      {
         text: "Frontend Engineer",
         items: [
           { text: "git", link: "/enginner/git" },

@@ -1,8 +1,10 @@
 # Optimization 
 
-### SplitChunksPlugin
+## SplitChunksPlugin
 
 `SplitChunksPlugin` 是 Webpack 内置的代码分割器，用于优化代码拆分（例如提取公共依赖，拆分异步代码块等），减少重复代码，提升缓存利用率。
+
+`splitChunks.cacheGroups` 用于定义如何将匹配特定条件的模块分组到不同的缓存组中，最终生成独立的chunk.
 
 ```js
 optimization: {
@@ -30,11 +32,15 @@ optimization: {
 }
 ```
 
-### TerserPlugin 
+## TerserPlugin 
 
 TerserPlugin 是 WebPack 中用于压缩和优化 JavaScript 代码的核心插件。核心功能：
 
-<!-- TODO:如何压缩 -->
+- 删除未使用的代码
+- 删除注释和空白字符
+- 缩短变量名
+- 优化表达式
+- 移除调试语句
 
 ```js
 optimization: {
@@ -60,9 +66,11 @@ optimization: {
 
 ### Tree Shaking 工作原理
 
-1. ES Module：Tree Shaking 只对 ESM 语法有效，因为 ES6 模块是静态的（在编译时就确定以来关系），而 CommonJS 模块是动态的。
-2. 静态分析：Webpack 通过静态分析代码，识别出哪些导出 export 被导入 imports 使用，哪些没被使用。
-3. UglifyJS/Terser：在压缩阶段，未被使用的代码会被移除。
+1. 依赖关系图构建：webppack 会从入口文件开始，分析所有模块的依赖关系，构建完整的依赖关系图。
+2. 静态分析：Webpack 通过静态分析代码，识别出哪些导出 export 被导入 imports 使用，哪些没被使用。这要求代码必须是静态可分析 （ESM） 的。
+3. 标记未使用代码：在依赖关系图中，标记哪些导出没有被任何模块使用。
+4. 消除死代码：在最终打包时，移除哪些被标记为未使用的代码。
+5. 副作用分析：识别并保留那些未被显示使用但具有副作用的代码。
 
 ### 启用 Tree Shaking
 

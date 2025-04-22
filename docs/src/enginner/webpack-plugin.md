@@ -58,6 +58,25 @@ plugins: [
 
 webpack 5+ 已内置为 `output.clean`，在每次构建前清理 `optput` 目录
 
+### CopyWebpackPlugin
+
+用于将 已存在的当个文件或整个目录复制到构建目录中。
+
+```js
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+module.exports = {
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'src/assets', to: 'assets' },
+        { from: 'src/favicon.ico', to: 'favicon.ico' }
+      ]
+    })
+  ]
+};
+```
+
 ### HotModuleReplacementPlugin
 
 webpack 内置，启动模块热更新
