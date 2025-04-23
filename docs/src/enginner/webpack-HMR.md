@@ -2,7 +2,7 @@
 
 HMR 是 Webpack 提供的一种机制，允许在运行时替换模块，而无需整页刷新，从而保持应用状态，提升开发效率和响应速度。
 
-Webpack 的 HMR 是通过 webpack-dev-server 实现的，它启动一个本地服务，包含 HTTP 服务（用于访问页面资源）和 WebSocket 服务（用于推送模块更新）。当我修改源代码时，Webpack 会**增量编译**变更模块，并通过 WebSocket 向浏览器推送更新消息。浏览器接收到通知后，通过内置的 HMR runtime 拉取新的模块代码，并执行 module.hot.accept 中的替换逻辑，从而无需刷新页面完成模块替换，提升开发效率。
+Webpack 的 HMR 是通过 webpack-dev-server 实现的，它启动一个本地服务，包含 HTTP 服务（用于访问页面资源）和 WebSocket 服务（用于推送模块更新）。当我修改源代码时，Webpack 会**增量编译**变更模块，并通过 WebSocket 向浏览器推送更新消息。浏览器接收到通知后，通过内置的 HMR runtime 拉取新的模块代码，并执行 `module.hot.accept` 中的替换逻辑，从而无需刷新页面完成模块替换，提升开发效率。
 
 当修改项目某个文件后，HMR 的工作流程：
 
