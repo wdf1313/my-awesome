@@ -54,6 +54,7 @@ export default defineConfig({
             text: "webpack optimization",
             link: "/enginner/webpack-optimization",
           },
+          { text: "webpack HMR", link: "/enginner/webpack-HMR" },
         ],
       },
       {
