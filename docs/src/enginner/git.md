@@ -2,7 +2,6 @@
 
 结合实际开发中遇到的场景问题，介绍各种命令的使用
 
-
 ## git 各个工作区
 
 - 工作区 Working Directory：电脑上实际的文件
@@ -58,6 +57,39 @@ git reset --soft HEAD~1
 ```bash
 git revert HEAD
 ```
+
+## 脚手架初始化项目后 git 仓库管理混乱问题
+
+### 问题情况
+
+在使用 UmiJS 脚手架在已有项目目录（my-demos）下创建新项目（umijs）时，发现源代码管理出现了多个 Git 仓库，或者新建的项目目录没有被父目录的仓库捕获到。
+
+
+### 原因
+
+UmiJS 脚手架会自动在新创建的项目目录下执行 `git init`，生成独立的 `.git` 仓库。IDE 会自动检测当前工作区的所有 `.git` 仓库，导致显示多个仓库。父目录的 Git 仓库不会管理子目录下的文件变更，因为子目录有独立的 `.git` 仓库。
+
+检查仓库结构
+```bash
+ls -a 
+
+ls -a umijs
+```
+
+检查 `my-demo` 和 `my-demo/umijs` 下是否都存在 `.git` 文件
+
+### 解决方法
+
+1. 删除子目录下的 `.git` 仓库 `rm -rf 文件目录/.git`
+
+2. 添加并提交变更
+
+```bash
+git add umijs
+git status
+git commit -m "feat: 初始化 umijs 项目"
+```
+
 
 ## 推荐学习资源
 
