@@ -10,6 +10,11 @@ Webpack 的 HMR 是通过 webpack-dev-server 实现的，它启动一个本地�
 
 2. 模块重新编译：Webpack 构建变更模块。生成一个新的模块文件（如 main.abc123.hot-update.js），一个描述更新内容的 JSON 文件（如 main.abc123.hot-update.json）
 
+![webpack-dev-server hot update json](./images/webpack-dev-server-json.png)
+
 3. 通知浏览器：Webpack-dev-server 通过 WebSocket 向浏览器推送更新通知，包含更新的 hash、模块 ID 等信息。
 
+![webpack-dev-server hot update json](./images/webpack-dev-server-ws.png)
+
 4. 客户端处理：浏览器中运行着 Webpack 的 HMR runtime，接收到 WebSocket 通知后，发起请求拉取新的模块代码，执行 module.hot.accept() 中的逻辑，将新模块热替换到页面中
+
