@@ -48,6 +48,7 @@ export default defineConfig({
         items: [
           { text: "git", link: "/enginner/git" },
           { text: "module", link: "/enginner/module" },
+          { text: "webpack", link: "/enginner/webpack" },
           { text: "webpack loader", link: "/enginner/webpack-loader" },
           { text: "webpack plugin", link: "/enginner/webpack-plugin" },
           {
