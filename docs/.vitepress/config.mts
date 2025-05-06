@@ -35,6 +35,7 @@ export default defineConfig({
             text: "functional-programming",
             link: "/js/functional-programming",
           },
+          { text: "prototype", link: "/js/prototype" },
           // { text: "Markdown Examples", link: "/markdown-examples" },
           // { text: "Runtime API Examples", link: "/api-examples" },
         ],
