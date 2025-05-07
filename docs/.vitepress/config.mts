@@ -70,6 +70,10 @@ export default defineConfig({
         ],
       },
       {
+        text: "Project",
+        items: [{ text: "feishu-login", link: "/project/feishu-login.md" }],
+      },
+      {
         text: "Bugs",
         items: [{ text: "setTimeout-error", link: "/bugs/setTimeout-error" }],
       },
