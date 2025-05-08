@@ -71,7 +71,12 @@ export default defineConfig({
       },
       {
         text: "Project",
-        items: [{ text: "feishu-login", link: "/project/feishu-login.md" }],
+        items: [
+          {
+            text: "backend-authentication",
+            link: "/project/backend-authentication",
+          },
+        ],
       },
       {
         text: "Bugs",

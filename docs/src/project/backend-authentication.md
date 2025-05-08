@@ -1,7 +1,5 @@
 # 后台管理项目登录、菜单权限
 
-鲸岛项目是一个企业级电商后台管理项目，使用 UmiMax 搭建的。
-
 ## 飞书扫码登录
 
 用户通过飞书 APP 扫码，完成第三方系统的登录。利用飞书开放平台的 OAuth2.0 授权机制，前端生成二维码，用户扫码后再飞书授权，授权后成功跳转系统页面，前端拿到临时 code，调用后端完成登录。
@@ -15,9 +13,9 @@
 ```js
 export default defineConfig({
   headScripts: [
-    { 
-      src: 'https://lf1-cdn-tos.bytegoofy.com/goofy/lark/op/h5-js-sdk-1.5.32.js', 
-      async: true 
+    {
+      src: "https://lf1-cdn-tos.bytegoofy.com/goofy/lark/op/h5-js-sdk-1.5.32.js",
+      async: true,
     },
   ],
 })
@@ -26,15 +24,15 @@ export default defineConfig({
 将二维码挂在到页面上
 
 ```js
-const QRLoginRef = useRef(null);
+const QRLoginRef = useRef(null)
 
 useEffect(() => {
   QRLoginRef.current = window.QRLogin({
-    id: 'login_container',
+    id: "login_container",
     goto,
-    width: '300',
-    height: '300',
-    style: 'border: none;',
+    width: "300",
+    height: "300",
+    style: "border: none;",
     onReady,
     onFailure,
   })
@@ -46,16 +44,16 @@ useEffect(() => {
 用户使用飞书 APP 扫码，确认授权后，飞书会把用户带到先前配置的 `redirect_uri`，并在 URL 上带上临时的 code 和 state
 
 3. **前端检测回跳**
-   
+
 前端页面检测到 URL 上 code 参数，自动向后端发送请求
 
 ```js
 const handleScanSuccess = useCallback(() => {
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get('code')
-  const state = params.get('state')
-  if(code && state) {
-    handleLogin({code, state})
+  const params = new URLSearchParams(window.location.search)
+  const code = params.get("code")
+  const state = params.get("state")
+  if (code && state) {
+    handleLogin({ code, state })
   }
 }, [])
 
@@ -64,28 +62,21 @@ useEffect(() => {
 }, [handleScanSuccess])
 ```
 
-4. **后端用code换取用户信息**
-  
+4. **后端用 code 换取用户信息**
+
 ## 菜单、按钮权限
 
-在 `umiJS/max` 项目下[配置权限](https://umijs.org/docs/max/access#%E6%89%A9%E5%B1%95%E7%9A%84%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE)
+在 `UmiMax` 项目下[配置权限](https://umijs.org/docs/max/access#%E6%89%A9%E5%B1%95%E7%9A%84%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE)需要在`config/config.ts` 中启用
+
+```js
+export default {
+  access: {},
+}
+```
 
 登录成功查询当前用户菜单权限，将用户信息（currentUser）菜单信息（menuInfo）在 `getInitialState()` 中返回。
 
 ### 配置动态菜单
-
-在 `app.tsx` 中配置菜单权限
-
-```js
-export const layout: RunTimeLayoutConfig = ({initialState}) => {
-  return {
-    menu: {
-      locale: true,
-      params: {}
-    }
-  }
-}
-```
 
 菜单数据结构如下
 
@@ -94,20 +85,58 @@ export const layout: RunTimeLayoutConfig = ({initialState}) => {
   // 一级菜单
   menuName: '数据中心',
   path: '/record-center',
-  perCode: 'recordCenter',
   children: [
     {
       // 二级菜单
       menuName: '基础数据',
       path: '/record-center/base-data'
-      perCode: 'baseData'
-      children: [ 
-        // 按钮权限
-        { menuName: '查看', permCode: 'basic:view' } 
-      ]
     }
   ]
 }
+```
+
+在 `app.tsx` 中配置菜单权限
+
+```js
+export const layout: RunTimeLayoutConfig = ({ initialState }) => {
+  return {
+    menu: {
+      locale: true,
+    },
+  }
+}
+```
+
+定义权限逻辑，在 `src/access.ts` 中
+
+```js
+export default function(initialState:) {
+  const { currentUser, menuInfo } = initialState || {}
+  // menu permissions map
+  const permissionsMap = currentUser.permissions.reduce(
+    (acc: any, curr: string) => {
+      acc[curr] = true;
+      return acc;
+    },
+    {},
+  );
+
+  return {
+    ...permissionsMap
+  }
+}
+```
+
+在路由中配置 access
+
+```js
+export default [
+  {
+    menuName: "数据中心",
+    path: "/record-center",
+    access: "recordCenter",
+  },
+]
 ```
 
 ### 配置按钮权限
@@ -117,30 +146,29 @@ export const layout: RunTimeLayoutConfig = ({initialState}) => {
 在这个方法中返回一个对象，我在这个对象中绑定了一个 `hasAccess` 方法用于判断当前用户是否具备当前页面按钮权限。
 
 ```js
-
-// 递归遍历菜单树，找到所有子菜单下的按钮权限码
+// 递归遍历后端返回有权限的菜单树，找到所有子菜单下的按钮权限码
 function getPermCodeList(menuInfo) {
-  if(!Array.isArray(menuInfo)) return []
+  if (!Array.isArray(menuInfo)) return []
 
   return menuInfo.reduce((acc: string[], item) => {
-    const codes = [item.permCode];
+    const codes = [item.permCode]
     if (Array.isArray(item.children)) {
-      codes.push(...getPermCodeList(item.children));
+      codes.push(...getPermCodeList(item.children))
     }
-    return [...acc, ...codes];
-  }, []);
+    return [...acc, ...codes]
+  }, [])
 }
 
-export default function(initialState) {
-  const { currentUser, menuInfo } = initialState ?? {};
+export default function (initialState) {
+  const { currentUser, menuInfo } = initialState ?? {}
   const adminRoleInfo = (currentInfo?.roleInfo).find((x) => x.roleId === 1)
   const isAdmin = _.isEmpty(adminRoleInfo) // 是否为管理员
   const perCodeList = getPermCodeList(menuInfo) // 按钮权限
-  
+
   return {
     hasAccess(code) {
       return isAdmin || permCodeList.includes(code)
-    }
+    },
   }
 }
 ```
@@ -148,21 +176,21 @@ export default function(initialState) {
 封装 `<AuthControl>` 自定义组件
 
 ```jsx
-import { useAccess, Access } from '@umijs/max';
+import { useAccess, Access } from "@umijs/max"
 
 type AuthControlProps = {
-  code: string;
-  children: React.ReactNode;
-};
+  code: string,
+  children: React.ReactNode,
+}
 
 const AuthControl: React.FC<AuthControlProps> = (props) => {
-  const { code, children } = props;
-  const access = useAccess();
+  const { code, children } = props
+  const access = useAccess()
 
-  return <Access accessible={access.hasAccess(code)}>{children}</Access>;
-};
+  return <Access accessible={access.hasAccess(code)}>{children}</Access>
+}
 
-export default AuthControl;
+export default AuthControl
 ```
 
 使用时将需要鉴权的按钮通过 children 传入
