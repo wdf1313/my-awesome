@@ -12,6 +12,28 @@
 
 - 远程仓库 Remote Repository：位于远程服务器上（如 GitLab、GitHub），通过 `git push` 将本地仓库的内容推送到远程仓库。通过 `git pull` 将远程仓库的内容拉取到本地。
 
+## 删除本地分支，重新同步远程分支
+
+团队协作中有时会遇到分支清洗，清洗过后我们本地分支与远程有很大出入，这时候我会采用这种方式。
+
+删除本地分支
+
+```bash
+git branch -D dev
+```
+
+从远程获取最新信息
+
+```bash
+git fetch origin
+```
+
+重新创建并切换到 dev 分支
+
+```bash
+git checkout -b dev origin/dev
+```
+
 ## 修改最新提交 message
 
 `git commit --amend` 打开 vim 编译器，修改提交信息。
@@ -63,7 +85,6 @@ git revert HEAD
 ### 问题情况
 
 在使用 UmiJS 脚手架在已有项目目录（my-demos）下创建新项目（umijs）时，发现源代码管理出现了多个 Git 仓库，或者新建的项目目录没有被父目录的仓库捕获到。
-
 
 ### 原因
 
