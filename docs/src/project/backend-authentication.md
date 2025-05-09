@@ -1,14 +1,22 @@
 # 后台管理项目登录、菜单权限
 
+## 导读
+
+本篇文档主要介绍后台管理项目中登录功能和权限管理的实现，包括以下内容：
+1. **飞书扫码登录**：通过飞书 OAuth2.0 授权机制实现扫码登录。
+2. **菜单权限管理**：基于 UmiMax 的动态菜单配置和权限控制。
+3. **按钮权限管理**：通过自定义组件实现按钮级别的权限控制。
+  
+
 ## 飞书扫码登录
 
-用户通过飞书 APP 扫码，完成第三方系统的登录。利用飞书开放平台的 OAuth2.0 授权机制，前端生成二维码，用户扫码后再飞书授权，授权后成功跳转系统页面，前端拿到临时 code，调用后端完成登录。
+用户通过飞书 APP 扫码，完成第三方系统的登录。利用飞书开放平台的 OAuth2.0 授权机制，前端生成二维码，用户扫码后在飞书授权，授权后成功跳转系统页面，前端拿到临时 code，调用后端完成登录。
 
 ### 实现流程
 
 1. **前端生成二维码**
 
-在 `config.js` 中引入飞书扫码登陆 JS SDK，用于前端生成二维码，二维码内容是一个带有 client_id、redirect_uri 等参数的授权链接。
+在 `config.js` 中引入飞书扫码登录 JS SDK，用于前端生成二维码，二维码内容是一个带有 `client_id`、`redirect_uri` 等参数的授权链接。
 
 ```js
 export default defineConfig({
@@ -21,7 +29,7 @@ export default defineConfig({
 })
 ```
 
-将二维码挂在到页面上
+将二维码挂载到页面上：
 
 ```js
 const QRLoginRef = useRef(null)
@@ -41,11 +49,11 @@ useEffect(() => {
 
 2. **用户扫码授权**
 
-用户使用飞书 APP 扫码，确认授权后，飞书会把用户带到先前配置的 `redirect_uri`，并在 URL 上带上临时的 code 和 state
+用户使用飞书 APP 扫码，确认授权后，飞书会把用户带到先前配置的 `redirect_uri`，并在 URL 上带上临时的 `code` 和 `state`。
 
 3. **前端检测回跳**
 
-前端页面检测到 URL 上 code 参数，自动向后端发送请求
+前端页面检测到 URL 上的 `code` 参数，自动向后端发送请求：
 
 ```js
 const handleScanSuccess = useCallback(() => {
@@ -64,9 +72,12 @@ useEffect(() => {
 
 4. **后端用 code 换取用户信息**
 
+后端通过飞书开放平台接口，用 `code` 换取用户的详细信息，并完成登录逻辑。
+
+
 ## 菜单、按钮权限
 
-在 `UmiMax` 项目下[配置权限](https://umijs.org/docs/max/access#%E6%89%A9%E5%B1%95%E7%9A%84%E8%B7%AF%E7%94%B1%E9%85%8D%E7%BD%AE)需要在`config/config.ts` 中启用
+UmiMax 内置了权限支持，主要通过 `@umijs/plugin-access` 实现，需在 `config/config.ts` 中启用。
 
 ```js
 export default {
@@ -74,11 +85,11 @@ export default {
 }
 ```
 
-登录成功查询当前用户菜单权限，将用户信息（currentUser）菜单信息（menuInfo）在 `getInitialState()` 中返回。
+登录成功后，查询当前用户的菜单权限，将用户信息（`currentUser`）和菜单信息（`menuInfo`）在 `getInitialState()` 中返回。
 
 ### 配置动态菜单
 
-菜单数据结构如下
+菜单数据结构如下：
 
 ```js
 {
@@ -89,13 +100,14 @@ export default {
     {
       // 二级菜单
       menuName: '基础数据',
-      path: '/record-center/base-data'
+      path: '/record-center/base-data',
+      component: 'src/record-center/base-data/index.tsx',
     }
   ]
 }
 ```
 
-在 `app.tsx` 中配置菜单权限
+在 `app.tsx` 中配置菜单权限：
 
 ```js
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
@@ -107,10 +119,10 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
 }
 ```
 
-定义权限逻辑，在 `src/access.ts` 中
+定义权限逻辑，在 `src/access.ts` 中：
 
 ```js
-export default function(initialState:) {
+export default function(initialState) {
   const { currentUser, menuInfo } = initialState || {}
   // menu permissions map
   const permissionsMap = currentUser.permissions.reduce(
@@ -127,7 +139,7 @@ export default function(initialState:) {
 }
 ```
 
-在路由中配置 access
+在路由中配置 `access`：
 
 ```js
 export default [
@@ -139,14 +151,16 @@ export default [
 ]
 ```
 
+---
+
 ### 配置按钮权限
 
-在 `src/accrss.ts` 文件默认导出一个方法，导出的方法会在项目初始化时被执行。
+在 `src/access.ts` 文件中默认导出一个方法，该方法会在项目初始化时被执行。
 
-在这个方法中返回一个对象，我在这个对象中绑定了一个 `hasAccess` 方法用于判断当前用户是否具备当前页面按钮权限。
+在这个方法中返回一个对象，并绑定一个 `hasAccess` 方法，用于判断当前用户是否具备当前页面按钮权限。
 
 ```js
-// 递归遍历后端返回有权限的菜单树，找到所有子菜单下的按钮权限码
+// 递归遍历后端返回的菜单树，找到所有子菜单下的按钮权限码
 function getPermCodeList(menuInfo) {
   if (!Array.isArray(menuInfo)) return []
 
@@ -161,9 +175,9 @@ function getPermCodeList(menuInfo) {
 
 export default function (initialState) {
   const { currentUser, menuInfo } = initialState ?? {}
-  const adminRoleInfo = (currentInfo?.roleInfo).find((x) => x.roleId === 1)
-  const isAdmin = _.isEmpty(adminRoleInfo) // 是否为管理员
-  const perCodeList = getPermCodeList(menuInfo) // 按钮权限
+  const adminRoleInfo = (currentUser?.roleInfo || []).find((x) => x.roleId === 1)
+  const isAdmin = !!adminRoleInfo // 是否为管理员
+  const permCodeList = getPermCodeList(menuInfo) // 按钮权限
 
   return {
     hasAccess(code) {
@@ -173,7 +187,7 @@ export default function (initialState) {
 }
 ```
 
-封装 `<AuthControl>` 自定义组件
+封装 `<AuthControl>` 自定义组件：
 
 ```jsx
 import { useAccess, Access } from "@umijs/max"
@@ -193,10 +207,12 @@ const AuthControl: React.FC<AuthControlProps> = (props) => {
 export default AuthControl
 ```
 
-使用时将需要鉴权的按钮通过 children 传入
+使用时将需要鉴权的按钮通过 `children` 传入：
 
 ```jsx
 <AuthControl code="basic:view">
   <Button onClick={() => handleClick()} />
 </AuthControl>
 ```
+
+通过以上配置，您可以实现基于菜单和按钮的权限管理，确保系统的安全性和灵活性。

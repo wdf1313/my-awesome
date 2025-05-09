@@ -76,6 +76,7 @@ export default defineConfig({
             text: "backend-authentication",
             link: "/project/backend-authentication",
           },
+          {text: "internationalization", link: "/project/internationalization"},
         ],
       },
       {
