@@ -60,6 +60,10 @@ export default defineConfig({
         ],
       },
       {
+        text: "Next.js",
+        items: [{ text: "next", link: "/next/README.md" }],
+      },
+      {
         text: "Network",
         items: [
           { text: "CORS", link: "/network/cors" },
@@ -67,6 +71,7 @@ export default defineConfig({
             text: "cross origin request",
             link: "/network/cross-origin-requests",
           },
+          { text: "browser render", link: "/network/browser-render" },
         ],
       },
       {
@@ -76,7 +81,10 @@ export default defineConfig({
             text: "backend-authentication",
             link: "/project/backend-authentication",
           },
-          {text: "internationalization", link: "/project/internationalization"},
+          {
+            text: "internationalization",
+            link: "/project/internationalization",
+          },
         ],
       },
       {
