@@ -44,9 +44,7 @@ ReactDOM.hydrateRoot(document.getElementById("root"), <App />)
 
 水合的意义在于，用户首次访问时，看到的是已经渲染好的 HTML，体验更好；而在 JavaScript 加载后，页面上的按钮、表单等交互功能会被激活。水合是连接 SSR 和客户端 React 的桥梁，让页面既快又能交互，是现代 React/Next.js 应用的重要机制。
 
-## NextJS 介绍
-
-### Next.js 核心特性
+## Next.js 核心特性
 
 1. 服务端渲染：每个页面可以灵活选中使用**静态生成**或者**服务端渲染**，根据需求动态选择渲染方式，更好地平衡性能与实时性。
 2. 基于文件的路由系统：使用**文件夹结构**直接定义路由路径，开发体验更直观。支持特殊文用于构建页面结构和加载逻辑。
@@ -57,7 +55,7 @@ ReactDOM.hydrateRoot(document.getElementById("root"), <App />)
      - SEO 支持：更易被搜索引擎抓取
      - 资源预加载：加快页面访问速度
 
-### App Router VS Pages Router
+## App Router VS Pages Router
 
 | 特性/对比点 | App Router（现代） | Pages Router（传统） |
 |-------------|-------------------|----------------------|
@@ -72,4 +70,61 @@ ReactDOM.hydrateRoot(document.getElementById("root"), <App />)
 | 学习曲线 | ⚠️ 较陡峭（但是 React 生态的一部分） | ✅ 更平缓、易学 |
 
 
+## React Server Component （RSC）
 
+RSC 是一种全新全新的架构模式，允许开发者：
+- 在服务器端渲染组件：部分组件只在服务器上运行和渲染；
+- 减少客户端压力：服务器组件不会被打包到客户端 bundle 中；
+- 自然混合前后端代码：在同一个库中无缝集成前后端逻辑；
+
+
+在 RSC 架构中，区分组件应该写在 Server Component 还是 Client Component 中主要基于以下规则：
+
+Server Component 适用场景：
+
+1. 数据获取和数据处理：需要直接访问数据库或后端 API，包含敏感逻辑和数据；
+2. 静态内容：不包含交互性、状态或效果的纯展示内容，例如：文章内容、产品描述等；
+3. 大型依赖：使用尽在服务器可用的 npm 包；
+4. 性能优化：希望减少客户端 bundle 大小；
+
+Client Component 适用场景：
+
+1. 交互需求：需要事件处理、状态管理、调用浏览器 API；
+2. UI 状态：表单输入、动画、拖拽等效果；
+3. 第三方库：依赖客户端功能的库
+
+![server-client boundary](./images/server-client-boundary.png)
+
+
+## Client Component VS Server Component
+
+| 特性                | 客户端组件 (Client Components)           | 服务器组件 (Server Components)       |
+|---------------------|------------------------------------------|--------------------------------------|
+| **状态/Hooks**      | ✅ 支持 (useState, useEffect 等)         | ❌ 不支持                            |
+| **状态提升**        | ⬜ 可选 (Lifting state up)               | ❌ 不适用 (N.A.)                     |
+| **Props 传递**      | ✅ 支持                                  | ✅ 支持 (必须可序列化，不能传函数/类) |
+| **数据获取**        | ⬜ 可通过库实现 (preferably with library) | ✅ 首选 (直接使用 async/await)        |
+| **导入限制**        | 仅能导入客户端组件                       | 可导入客户端和服务器组件              |
+| **渲染限制**        | 只能渲染客户端组件                       | 可渲染客户端和服务器组件              |
+| **重新渲染触发条件**| 状态变化时                               | URL 变化时 (导航)                    |
+| **默认类型**        | ❌ 需要显式声明 "use client"              | ✅ 默认类型                          |
+
+## React Server Component 优缺点
+
+### 优势 
+
+1. 全栈开发能力：仅用 React 组件 + Server actions 即可构建完整全栈应用；前后端共享单一代码库；
+2. 数据安全与效率：服务端组件直接访问数据源；页面级数据预获取，避免客户端请求；“代码消失”特性：服务端组件不传输 JS，可零成本引入大型库；
+3. 开发体验：更贴近传统 React 开发；
+
+### 劣势
+
+1. 复杂程度增加：显著提高 React 复杂度，需要学习新的概念；需频繁决策组件类型(服务端/客户端)和数据获取位置；
+2. 功能限制：上下文 API（Context API）在服务端不可用；必须依赖框架使用
+3. 架构决策：增加了"组件类型选择"等新的架构决策点，需要权衡服务端/客户端功能边界；
+
+## React Server Component Works Behind the Scenes
+
+![rsc behind the scenes](./images/rsc-behind-scenes.png)
+
+![rsc behind the scenes](./images/rsc-behind-scenes2.png)
