@@ -12,6 +12,50 @@
 
 - 远程仓库 Remote Repository：位于远程服务器上（如 GitLab、GitHub），通过 `git push` 将本地仓库的内容推送到远程仓库。通过 `git pull` 将远程仓库的内容拉取到本地。
 
+##  merge VS rebase 
+
+### merge 
+
+`merge` 将两个分支的提交历史合并，产生一条新的“合并提交（merge commit）”，分支历史保留所有分叉和合流记录。
+
+```bash
+A---B---C   (main)
+     \
+      D---E (feature)
+
+git checkout main
+git merge feature
+```
+
+合并后
+
+```bash
+A---B---C-------M  (main)
+     \       /
+      D---E (feature)
+```
+
+### rebase
+
+`rebase` 将当前分支的提交**挪动到目标分支的后面**，是提交历史看起来像是线性的，不保留分叉点，重写历史。
+
+```bash
+A---B---C   (main)
+     \
+      D---E (feature)
+
+git checkout feature
+git rebase main
+```
+
+变成
+
+```bash
+A---B---C---D'---E'  (feature rebased)
+```
+
+D' 和 E' 是新的提交，相当于 D 和 E 的“复制”版本
+
 ## 删除本地分支，重新同步远程分支
 
 团队协作中有时会遇到分支清洗，清洗过后我们本地分支与远程有很大出入，这时候我会采用这种方式。
