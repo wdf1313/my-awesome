@@ -41,6 +41,10 @@ export default defineConfig({
         ],
       },
       {
+        text: "React",
+        items: [{ text: "hooks", link: "/react/hooks" }],
+      },
+      {
         text: "Vue",
         items: [{ text: "reactivity", link: "/vue/reactivity" }],
       },
