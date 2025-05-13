@@ -61,6 +61,10 @@ export default defineConfig({
             link: "/enginner/webpack-optimization",
           },
           { text: "webpack HMR", link: "/enginner/webpack-HMR" },
+          {
+            text: "performance optimization",
+            link: "/enginner/performance-optimization",
+          },
         ],
       },
       {
@@ -74,6 +78,10 @@ export default defineConfig({
           {
             text: "cross origin request",
             link: "/network/cross-origin-requests",
+          },
+          {
+            text: "input url loading process",
+            link: "/network/input-url-loading-process",
           },
           { text: "browser render", link: "/network/browser-render" },
         ],
