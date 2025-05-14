@@ -84,6 +84,7 @@ export default defineConfig({
             link: "/network/input-url-loading-process",
           },
           { text: "browser render", link: "/network/browser-render" },
+          { text: "cache-straregy", link: "/network/cache-straregy" },
         ],
       },
       {
