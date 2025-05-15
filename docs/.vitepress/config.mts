@@ -46,7 +46,10 @@ export default defineConfig({
       },
       {
         text: "Vue",
-        items: [{ text: "reactivity", link: "/vue/reactivity" }],
+        items: [
+          { text: "reactivity", link: "/vue/reactivity" },
+          { text: "render pipeline", link: "/vue/render-pipeline" },
+        ],
       },
       {
         text: "Frontend Engineer",
