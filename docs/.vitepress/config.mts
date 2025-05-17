@@ -101,6 +101,7 @@ export default defineConfig({
             text: "internationalization",
             link: "/project/internationalization",
           },
+          { text: "Qiankun", link: "/project/qiankun" },
         ],
       },
       {
