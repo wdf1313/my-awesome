@@ -1,66 +1,203 @@
-# Loader 
+# Loader
 
 webpack 只能理解 JavaScript 和 JSON 文件。**loader** 让 webpack 能够去处理其他类型的文件。
 
 loader 用于对模块的源代码进行转换，当 webpack 遇到 `import/require` 语句时，会根据配置的 loader 对文件内容进行转换。
 
-## 常用 Loader
+## Babel Loader
 
-### JS/TS Loader
+ECMAScript 6.0(简称 ES6) 版本补充了大量提升 JavaScript 开发效率的新特性，包括 `class` 关键字、块级作用域、ES Module 方案、代理与反射等，使得 JavaScript 可以真正被用于编写复杂的大型应用程序，但知道现在浏览器、Node 等 JavaScript 引擎都或多或少存在兼容性问题。为此，现代 Web 开发流程中通常会引入 Babel 等转译工具。
 
-`babel-loader` 将 ES6+ 代码转换为向后兼容的 JS 语法，以便能够在旧版浏览器中运行。
+Babel 是一个开源 JavaScript 转编译器，它能将高版本 —— 如 ES6 代码等价转译为向后兼容，能直接在旧版 JavaScript 引擎运行的低版本代码，例如：
+
+```js
+// 使用 Babel 转译前
+arr.map((item) => item + 1)
+
+// 转译后
+arr.map(function (item) {
+  return item + 1
+})
+```
+
+示例中高版本的箭头函数语法经过 Babel 处理后被转译为低版本 `function` 语法，从而能在不支持箭头函数的 JavaScript 引擎中正确执行。借助 Babel 我们既可以始终使用最新版本 ECMAScript 语法编写 Web 应用，又能确保产物在各种环境下正常运行。
+
+> 提示：Babel 还提供了一个在线版的 REPL 页面，读者可在 [babeljs.io/repl](https://link.juejin.cn/?target=https%3A%2F%2Fbabeljs.io%2Frepl) 实时体验功能效果。
+
+Webpack 场景下，只需使用 `babel-loader` 即可接入 Babel 转译功能：
 
 ```bash
-npm install --save-dev @babel-core babel-loader @babel/preset-env
+npm install -D @babel-core @babel/preset-env babel-loader
 ```
+
+2. 添加模块处理规则
+
+```js
+module.exports = {
+  /* ... */
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: ["babel-loader"],
+      },
+    ],
+  },
+}
+```
+
+示例中，`module` 属性用于声明模块处理规则，`module.rules` 子属性则用于定义针对什么类型的文件使用哪些 Loader 处理器，上例可解读为：
+
+- `test: /\.js$/`：用于声明该规则的过滤条件，只有路径名命中该正则的文件才会应用这条规则，示例中的 `/\.js$/` 表示对所有 `.js` 后缀的文件生效
+- `use`：用于声明这条规则的 Loader 处理器序列，所有命中该规则的文件都会被传入 Loader 序列做转译处理
+
+3. 执行编译命令
+
+```
+npx webpack
+```
+
+接入后，可以使用 `.babelrc` 文件或 `rule.options` 属性配置 Babel 功能逻辑，例如：
+
+```js
+// 预先安装 @babel/preset-env
+// npm i -D @babel/preset-env
+module.exports = {
+  /* ... */
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: [
+          {
+            loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env"],
+            },
+          },
+        ],
+      },
+    ],
+  },
+}
+```
+
+`@babel/preset-env` 是一种 Babel 预设规则集 —— Preset，这种设计能按需将一系列复杂、数量庞大的配置、插件、Polyfill 等打包成一个单一的资源包，从而简化 Babel 的应用、学习成本。Preset 是 Babel 的主要应用方式之一，社区已经针对不同应用场景打包了各种 Preset 资源，例如：
+
+- [`babel-preset-react`](https://link.juejin.cn/?target=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Fbabel-preset-react)：包含 React 常用插件的规则集，支持 `preset-flow`、`syntax-jsx`、`transform-react-jsx` 等；
+- [`@babel/preset-typescript`](https://link.juejin.cn/?target=https%3A%2F%2Fbabeljs.io%2Fdocs%2Fen%2Fbabel-preset-typescript)：用于转译 TypeScript 代码的规则集
+- [`@babel/preset-flow`](https://link.juejin.cn/?target=https%3A%2F%2Fbabeljs.io%2Fdocs%2Fen%2Fbabel-preset-flow%2F)：用于转译 [Flow](https://link.juejin.cn/?target=https%3A%2F%2Fflow.org%2Fen%2Fdocs%2Fgetting-started%2F) 代码的规则集
 
 - `@babel-core`：负责代码的解析(parse)、转换(transform)和生成(generate)
 - `babel-loader`：让 Webpack 在打包时调用 Babel
 - `@babel/preset-env`：智能预设，决定转换哪些新语法，避免手动设置。
 
+工作流程 `Webpack → babel-loader → @babel/core → @babel/preset-env → 转换后的代码`
+
+## TS loader
+
+Webpack 有很多种接入 TypeScript 的方法，包括 `ts-loader`、`awesome-ts-loader`、 `babel-loader`。通常可使用 `ts-loader` 构建 TypeScript 代码：
+
+1. 安装依赖
+
+```bash
+npm i -D typescript ts-loader
+```
+
+2. 配置 Webpack
+
 ```js
-module: {
-  rules: [
-    {
-      test: /\.js$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            ['@babel/preset-env', { 
-              targets: "> 0.5%, not dead", // 兼容市场占有率 > 0.5%，且未废弃的浏览器
-              useBuiltIns: 'usage', // 按需引入 polyfill 
-              corejs: 3 // 指定 core-js 版本
-            }]
-          ],
-          plugins: ['@babel/plugin-transform-runtime']
-        }
-      }
-    }
-  ]
+const path = require("path")
+
+module.exports = {
+  /* xxx */
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        use: "ts-loader",
+      },
+    ],
+  },
+  resolve: {
+    extensions: [".ts", ".js"],
+  },
 }
 ```
 
-工作流程 `Webpack → babel-loader → @babel/core → @babel/preset-env → 转换后的代码`
+- 使用 `module.rules` 声明对所有符合 `/\.ts$/` 正则 —— 即 `.ts` 结尾的文件应用 `ts-loader` 加载器
+- 使用 `resolve.extensions` 声明自动解析 `.ts` 后缀文件，这意味着代码如 `import "./a.ts"` 可以忽略后缀声明，简化为 `import "./a"` 文件
 
-如果代码运行在 IE11 等老版本浏览器中可能会遇到代码转换了，但某些 API （例如 Promise）仍然报错。是因为 `@babel/preset-env` 默认只转换语法，不处理 API。
+3. 创建 `tsconfig.json` 配置文件，并补充 TypeScript 配置信息
 
-解决方案：配置 `useBuiltIns:usage` + 安装 `core-js`
-
-`core-js` 是 JavaScript 的标准库 polyfill，提供 ES5、ES6+ 甚至未来提案中的 API 的实现。
-
-```bash
-npm install core-js@3
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "moduleResolution": "node"
+  }
+}
 ```
 
-`useBuiltIns:usage` 只 polyfill 代码中用到的 API，打包体积优化。
+4. 执行编译命令
 
-:::tip polyfill
+```
+npx webpack
+```
 
-Polyfill（也叫 垫片）是一段 JavaScript 代码，用于在现代浏览器中模拟原生不支持的 API 或语法，让旧浏览器也能运行新特性。
+## Eslint
 
-:::
+Webpack 下，可以使用 `eslint-webpack-plugin` 接入 ESLint 工具，步骤：
+
+1. 安装依赖
+
+```bash
+# 安装 eslint
+npm i -D eslint eslint-webpack-plugin
+
+# 简单起见，这里直接使用 standard 规范
+npm i -D eslint-config-standard eslint-plugin-promise eslint-plugin-import eslint-plugin-node
+```
+
+2. 在项目根目录添加 `.eslintrc` 配置文件，内容：
+
+```json
+// .eslintrc
+{
+  "extends": "standard"
+}
+```
+
+> 提示：关于 ESLint 配置项的更多信息，可参考：[eslint.org/docs/user-g…](https://link.juejin.cn/?target=https%3A%2F%2Feslint.org%2Fdocs%2Fuser-guide%2Fconfiguring%2F)
+
+3. 添加 `webpack.config.js` 配置文件，补充 `eslint-webpack-plugin` 配置：
+
+```js
+// webpack.config.js
+const path = require("path")
+const ESLintPlugin = require("eslint-webpack-plugin")
+
+module.exports = {
+  entry: "./src/index",
+  mode: "development",
+  devtool: false,
+  output: {
+    filename: "[name].js",
+    path: path.resolve(__dirname, "dist"),
+  },
+  // 添加 eslint-webpack-plugin 插件实例
+  plugins: [new ESLintPlugin()],
+}
+```
+
+4. 执行编译命令
+
+```
+npx webpack
+```
+
+配置完毕后，就可以在 Webpack 编译过程实时看到代码风格错误提示：
 
 ### 样式 Loader
 
@@ -129,7 +266,6 @@ CSS Module 是将 CSS 作用域限定在组件级别的方法，可以有效避�
   - `camelCaseOnly`: 只导出驼峰格式
   - `dashes`: 保留破折号
   - `dashesOnly`: 只保留破折号
-
 
 #### PostCSS-Loader
 
@@ -272,8 +408,7 @@ npm install --save-dev file-loader url-loader
 },
 ```
 
-
-## 原理 
+## 原理
 
 Loader 本质上是一个函数，接收源文件内容（或前一个 Loader 的处理结果），然后返回转换后的内容。
 
@@ -297,18 +432,18 @@ Loader 本质上是一个函数，接收源文件内容（或前一个 Loader �
 
 ```js
 // loader 基本结构
-module.exports = function(source, map, meta) {
+module.exports = function (source, map, meta) {
   // source: 文件内容
   // map: source map
   // meta: 元数据
-  
+
   // 处理逻辑...
-  
+
   // 返回处理后的内容
-  return source; // 同步
+  return source // 同步
   // 或
-  this.async(null, source, map, meta); // 异步
-};
+  this.async(null, source, map, meta) // 异步
+}
 ```
 
 在 loader 函数中，`this` 指向 loader context 对象，提供了一些属性和方法：
@@ -322,7 +457,7 @@ module.exports = function(source, map, meta) {
 
 ### Loader 类型
 
-#### 前置 Loader 
+#### 前置 Loader
 
 通过 `enforce: 'pre'` 指定，优先执行。适合需要在其他 Loader 处理前进行预处理的情况
 
@@ -330,10 +465,10 @@ module.exports = function(source, map, meta) {
 module: {
   rules: [
     {
-      enforce: 'pre',
+      enforce: "pre",
       test: /\.js$/,
-      loader: 'eslint-loader'
-    }
+      loader: "eslint-loader",
+    },
   ]
 }
 ```
@@ -347,13 +482,13 @@ module: {
   rules: [
     {
       test: /\.css$/,
-      use: ['style-loader', 'css-loader']
-    }
+      use: ["style-loader", "css-loader"],
+    },
   ]
 }
 ```
 
-#### 后置 Loader(Post Loader) 
+#### 后置 Loader(Post Loader)
 
 通过 `enforce: 'post'` 指定，适合需要在其他 Loader 处理后进行处理的情况。
 
@@ -361,37 +496,37 @@ module: {
 module: {
   rules: [
     {
-      enforce: 'post',
+      enforce: "post",
       test: /\.js$/,
-      loader: 'babel-loader'
-    }
+      loader: "babel-loader",
+    },
   ]
 }
 ```
 
-#### 行内 Loader 
+#### 行内 Loader
 
 在 `import` 或 `require` 语句中指定，使用 `!` 分隔多个 Loader。优先级高于配置文件中的 Loader
 
 ```js
 // 使用单个行内 Loader
-import Styles from 'style-loader!css-loader!./styles.css';
+import Styles from "style-loader!css-loader!./styles.css"
 
 // 使用多个行内 Loader
-import Styles from 'style-loader!css-loader!sass-loader!./styles.scss';
+import Styles from "style-loader!css-loader!sass-loader!./styles.scss"
 
 // 禁用普通 Loader
-import Styles from '!style-loader!css-loader!./styles.css';
+import Styles from "!style-loader!css-loader!./styles.css"
 
 // 禁用前置和后置 Loader
-import Styles from '-!style-loader!css-loader!./styles.css';
+import Styles from "-!style-loader!css-loader!./styles.css"
 
 // 禁用所有配置的 Loader
-import Styles from '!!style-loader!css-loader!./styles.css';
+import Styles from "!!style-loader!css-loader!./styles.css"
 ```
 
 前缀含义
 
-`!` 禁用普通 Loader 
+`!` 禁用普通 Loader
 `-!` 禁用前置和普通 Loader
 `!!` 禁用所有配置的 Loader，只使用行内 Loader
