@@ -42,7 +42,10 @@ export default defineConfig({
       },
       {
         text: "React",
-        items: [{ text: "hooks", link: "/react/hooks" }],
+        items: [
+          { text: "JSX", link: "/react/jsx" },
+          { text: "hooks", link: "/react/hooks" },
+        ],
       },
       {
         text: "Vue",
@@ -101,6 +104,7 @@ export default defineConfig({
             text: "internationalization",
             link: "/project/internationalization",
           },
+          { text: "micro frontEnd", link: "/project/micro-frontend" },
           { text: "Qiankun", link: "/project/qiankun" },
         ],
       },

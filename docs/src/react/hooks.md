@@ -135,7 +135,41 @@ function counter () {
 
 - `useContext` 使用 Context 上下文
 
-- `useRef` 获取 DOM或保存不触发重新渲染的值
+- `useRef` 获取 DOM 或保存不触发重新渲染的值
+
+访问 DOM 元素 
+
+```jsx
+function FocusInput() {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus(); // 自动聚焦
+  }, []);
+
+  return <input ref={inputRef} />;
+}
+
+```
+
+保存可变的变量，不会触发重渲染
+
+```jsx
+function Timer() {
+  const countRef = useRef(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      countRef.current += 1;
+      console.log(countRef.current); // 每秒打印当前值
+    }, 1000);
+
+    return () => clearInterval(id);
+  }, []);
+
+  return <div>Check console</div>;
+}
+```
 
 - `useImperativeHandle` 自定义 ref 暴露给父组件的方法
 
