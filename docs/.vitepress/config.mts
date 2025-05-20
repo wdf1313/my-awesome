@@ -59,18 +59,18 @@ export default defineConfig({
         items: [
           { text: "git", link: "/enginner/git" },
           { text: "module", link: "/enginner/module" },
-          { text: "webpack", link: "/enginner/webpack" },
-          { text: "webpack loader", link: "/enginner/webpack-loader" },
           {
-            text: "webpack splitChunks",
-            link: "/enginner/webpack-splitChunks",
+            text: "webpack",
+            link: "/enginner/webpack",
+            items: [
+              { text: "loader", link: "/enginner/webpack-loader" },
+              {
+                text: "splitChunks",
+                link: "/enginner/webpack-splitChunks",
+              },
+              { text: "hmr", link: "/enginner/webpack-HMR" },
+            ],
           },
-          // { text: "webpack plugin", link: "/enginner/webpack-plugin" },
-          {
-            text: "webpack optimization",
-            link: "/enginner/webpack-optimization",
-          },
-          { text: "webpack HMR", link: "/enginner/webpack-HMR" },
           {
             text: "performance optimization",
             link: "/enginner/performance-optimization",
