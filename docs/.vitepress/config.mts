@@ -74,6 +74,7 @@ export default defineConfig({
           {
             text: "performance optimization",
             link: "/enginner/performance-optimization",
+            items: [{ text: "Dom Fragment", link: "/enginner/dom-fragment" }],
           },
         ],
       },
