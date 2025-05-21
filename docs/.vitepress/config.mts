@@ -91,6 +91,10 @@ export default defineConfig({
             link: "/network/cross-origin-requests",
           },
           {
+            text: "browser process/thread",
+            link: "/network/browser-process-thread",
+          },
+          {
             text: "input url loading process",
             link: "/network/input-url-loading-process",
           },
