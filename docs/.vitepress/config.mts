@@ -64,6 +64,7 @@ export default defineConfig({
             link: "/enginner/webpack",
             items: [
               { text: "loader", link: "/enginner/webpack-loader" },
+              { text: "loader develop", link: "/enginner/webpack-loader-develop"},
               {
                 text: "splitChunks",
                 link: "/enginner/webpack-splitChunks",
