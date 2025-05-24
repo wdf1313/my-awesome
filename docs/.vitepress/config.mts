@@ -45,6 +45,7 @@ export default defineConfig({
         items: [
           { text: "JSX", link: "/react/jsx" },
           { text: "hooks", link: "/react/hooks" },
+          { text: "Fiber", link: "/react/Fiber" },
         ],
       },
       {
