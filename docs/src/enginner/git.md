@@ -12,9 +12,9 @@
 
 - 远程仓库 Remote Repository：位于远程服务器上（如 GitLab、GitHub），通过 `git push` 将本地仓库的内容推送到远程仓库。通过 `git pull` 将远程仓库的内容拉取到本地。
 
-##  merge VS rebase 
+## merge VS rebase
 
-### merge 
+### merge
 
 `merge` 将两个分支的提交历史合并，产生一条新的“合并提交（merge commit）”，分支历史保留所有分叉和合流记录。
 
@@ -135,8 +135,9 @@ git revert HEAD
 UmiJS 脚手架会自动在新创建的项目目录下执行 `git init`，生成独立的 `.git` 仓库。IDE 会自动检测当前工作区的所有 `.git` 仓库，导致显示多个仓库。父目录的 Git 仓库不会管理子目录下的文件变更，因为子目录有独立的 `.git` 仓库。
 
 检查仓库结构
+
 ```bash
-ls -a 
+ls -a
 
 ls -a umijs
 ```
@@ -155,6 +156,12 @@ git status
 git commit -m "feat: 初始化 umijs 项目"
 ```
 
+## 放弃被 git 追踪文件
+
+```bash
+git rm --cached -r xxx
+git commit -m "remove tracked xxx"
+```
 
 ## 推荐学习资源
 
