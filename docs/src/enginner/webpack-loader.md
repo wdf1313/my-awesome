@@ -1,6 +1,10 @@
 # Loader
 
-Webpack 默认只能理解 JavaScript 和 JSON 文件。**Loader** 机制使其能够处理其他类型的资源文件。Loader 主要用于对模块源代码进行转换，当 Webpack 遇到 `import/require` 语句时，会根据配置的 loader 对文件内容进行相应处理。
+Webpack 默认只能理解 JavaScript 和 JSON 文件。
+
+**Loader** 机制使其能够处理其他类型的资源文件。Loader 主要用于对模块源代码进行转换，
+
+当 Webpack 遇到 `import/require` 语句时，会根据配置的 loader 对文件内容进行相应处理。
 
 ## Babel Loader
 
