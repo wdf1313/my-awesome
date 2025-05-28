@@ -30,14 +30,10 @@ export default defineConfig({
           { text: "date-type", link: "/js/data-type" },
           { text: "var、let、const", link: "/js/var-let-const" },
           { text: "scope", link: "/js/scope" },
-          { text: "closure", link: "/js/closure" },
-          {
-            text: "functional-programming",
-            link: "/js/functional-programming",
-          },
           { text: "prototype", link: "/js/prototype" },
-          // { text: "Markdown Examples", link: "/markdown-examples" },
-          // { text: "Runtime API Examples", link: "/api-examples" },
+          { text: "closure", link: "/js/closure" },
+          { text: "functional-programming", link: "/js/functional-programming" },
+          { text: "debounce-throttle", link: "/js/debounce-throttle" },
         ],
       },
       {
