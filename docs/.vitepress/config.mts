@@ -94,7 +94,11 @@ export default defineConfig({
       },
       {
         text: "Next.js",
-        items: [{ text: "next", link: "/next/README.md" }],
+        items: [
+          { text: "next", link: "/next/index.md" },
+          { text: "route", link: "/next/route" },
+          { text: "image", link: "/next/image" },
+        ],
       },
       {
         text: "Network",
