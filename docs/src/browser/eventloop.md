@@ -1,4 +1,4 @@
-# 浏览器中的事件循环 Eventloop
+# 浏览器中的事件循环 Event Loop
 
 事件循环 Event Loop 是 JavaScript 执行机制的核心。由于 JavaScript 是单线程的，为了**实现异步操作**（如定时器、网络请求、DOM 事件等）。浏览器采用事件循环机制协调同步任务和异步任务的**执行顺序**。
 

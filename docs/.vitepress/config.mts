@@ -41,7 +41,17 @@ export default defineConfig({
           { text: "debounce-throttle", link: "/js/debounce-throttle" },
           { text: "promise", link: "/js/promise" },
           { text: "chained-promises", link: "/js/chained-promises" },
-          { text: "browser-eventloop", link: "/js/browser-eventloop" },
+        ],
+      },
+      {
+        text: "Browser",
+        items: [
+          { text: "eventloop", link: "/browser/eventloop" },
+          {
+            text: "process-thread",
+            link: "/browser/process-thread",
+          },
+          { text: "render", link: "/browser/render" },
         ],
       },
       {
@@ -113,14 +123,9 @@ export default defineConfig({
             link: "/network/cross-origin-requests",
           },
           {
-            text: "browser process/thread",
-            link: "/network/browser-process-thread",
-          },
-          {
             text: "input url loading process",
             link: "/network/input-url-loading-process",
           },
-          { text: "browser render", link: "/network/browser-render" },
           { text: "cache-straregy", link: "/network/cache-straregy" },
         ],
       },
