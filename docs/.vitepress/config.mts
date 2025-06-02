@@ -32,6 +32,7 @@ export default defineConfig({
           { text: "var、let、const", link: "/js/var-let-const" },
           { text: "scope", link: "/js/scope" },
           { text: "prototype", link: "/js/prototype" },
+          { text: "new", link: "/js/new" },
           { text: "closure", link: "/js/closure" },
           {
             text: "functional-programming",
@@ -46,8 +47,10 @@ export default defineConfig({
         text: "React",
         items: [
           { text: "JSX", link: "/react/jsx" },
+          { text: "strict-mode", link: "/react/strict-mode" },
           { text: "hooks", link: "/react/hooks" },
-          { text: "Fiber", link: "/react/Fiber" },
+          { text: "useState", link: "/react/useState" },
+          { text: "fiber", link: "/react/fiber" },
         ],
       },
       {
