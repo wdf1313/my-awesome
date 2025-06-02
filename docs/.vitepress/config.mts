@@ -41,6 +41,7 @@ export default defineConfig({
           { text: "debounce-throttle", link: "/js/debounce-throttle" },
           { text: "promise", link: "/js/promise" },
           { text: "chained-promises", link: "/js/chained-promises" },
+          { text: "browser-eventloop", link: "/js/browser-eventloop" },
         ],
       },
       {
