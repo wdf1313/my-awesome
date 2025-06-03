@@ -52,6 +52,10 @@ export default defineConfig({
             link: "/browser/process-thread",
           },
           { text: "render", link: "/browser/render" },
+          {
+            text: "input url loading process",
+            link: "/browser/input-url-loading-process",
+          },
         ],
       },
       {
@@ -121,10 +125,6 @@ export default defineConfig({
           {
             text: "cross origin request",
             link: "/network/cross-origin-requests",
-          },
-          {
-            text: "input url loading process",
-            link: "/network/input-url-loading-process",
           },
           { text: "cache-straregy", link: "/network/cache-straregy" },
         ],
