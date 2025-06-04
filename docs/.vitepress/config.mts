@@ -56,6 +56,10 @@ export default defineConfig({
             text: "input url loading process",
             link: "/browser/input-url-loading-process",
           },
+          {
+            text: "cookie、storage、indexDB",
+            link: "/browser/cookie、storage、indexDB",
+          },
         ],
       },
       {
