@@ -122,7 +122,7 @@ export default defineConfig({
         text: "Next.js",
         items: [
           { text: "next", link: "/next/index.md" },
-          { text: "route", link: "/next/route" },
+          { text: "layout-pages", link: "/next/layout-pages" },
           { text: "image", link: "/next/image" },
         ],
       },
