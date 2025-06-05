@@ -1,6 +1,6 @@
 # useState
 
-`useState` 用于在函数组件中添加和管理“状态”
+`useState` 用于在函数组件中添加和管理“状态”。
 
 ## 初始化状态
 
@@ -12,7 +12,7 @@ const [age, setAge] = useState(40)
 
 ### 懒初始化
 
-对于需要计算得到的初始状态，可以使用函数传递给 `useState`。这样函数只在初次渲染时执行，而非每次渲染。
+对于需要计算得到的初始状态，可以传递一个函数给 `useState`。这样该函数只会在初次渲染时执行，而不是每次渲染。
 
 ```jsx
 const [todos, setTodos] = useState(createInitialTodos)
@@ -22,22 +22,21 @@ const [todos, setTodos] = useState(createInitialTodos)
 
 ### 直接更新 VS 函数式更新
 
-大部分情况，直接更新状态即可；
+大多数情况下，直接更新状态即可：
 
 ```jsx
 setAge(newState)
 ```
 
-但当新状态依赖前一个状态时，推荐使用函数式更新。这确保了更新准确性，特别是在并发模式下。
+但当新状态依赖于前一个状态时，推荐使用函数式更新。这可以确保更新的准确性，尤其是在并发模式下。
 
 ```jsx
 setState((prevState) => prevState + 1)
 ```
 
-以下两个例子展示函数式更新的重要性：
+以下例子展示了函数式更新的重要性：
 
 ```jsx
-// 示例1: 使用函数式更新
 import { useState } from "react"
 
 export default function Counter() {
@@ -65,17 +64,17 @@ export default function Counter() {
 // 结果：点击 +3 时，age 更新为 45。
 ```
 
+直接更新
+
 ```jsx
-// 示例1: 使用函数式更新
+// 示例2: 使用直接更新
 import { useState } from "react"
 
 export default function Counter() {
   const [age, setAge] = useState(42)
-
   function increment() {
-    setAge((a) => a + 1) // 函数式更新
+    setAge(age + 1) // 直接更新
   }
-
   return (
     <>
       <h1>Your age: {age}</h1>
@@ -91,17 +90,17 @@ export default function Counter() {
     </>
   )
 }
-// 结果：点击 +3 时，age 更新为 45。
+// 结果：点击 +3 时，可能只更新为 43。
 ```
 
 ### 对象与数组的更新
 
-对象和数组的更新需要创建新的引用，而不是修改原状态。
+对象和数组的更新需要**创建新的引用**，而不是直接修改原状态。
 
 ```jsx
 setForm({
   ...form,
-  name: e.target.value, // 更新这个属性
+  name: e.target.value, // 更新该属性
 })
 
 // 错误示例：
@@ -118,7 +117,7 @@ setTodos([
   },
 ])
 
-// 错误示例
+// 错误示例：
 // todos.push({
 //   id: nextId++,
 //   title: title,
@@ -127,9 +126,9 @@ setTodos([
 // setTodos(todos);
 ```
 
-### 函数更新
+### 存储函数
 
-如果想在状态中存储一个函数，需要使用一个箭头函数来“包裹”它。
+如果想在状态中存储一个函数，需要用箭头函数“包裹”它。
 
 ```jsx
 const [fn, setFn] = useState(() => someFunction)
@@ -139,9 +138,9 @@ function handleClick() {
 }
 ```
 
-通常不会使用，但在某些特定的场景下会用到。比如动态切换回调/策略模式
+通常不会这样用，但在某些特定场景下会用到，比如动态切换回调/策略模式。
 
-有时候需要根据用户操作或业务逻辑，动态切换某个回调函数的实现。
+有时需要根据用户操作或业务逻辑，动态切换某个回调函数的实现：
 
 ```jsx
 function fnA() { alert('A'); }

@@ -67,8 +67,12 @@ export default defineConfig({
         items: [
           { text: "JSX", link: "/react/jsx" },
           { text: "strict-mode", link: "/react/strict-mode" },
-          { text: "hooks", link: "/react/hooks" },
-          { text: "useState", link: "/react/useState" },
+          {
+            text: "hooks", link: "/react/hooks", items: [
+              { text: "useState", link: "/react/useState" },
+              { text: "useReducer", link: "/react/useReducer" },
+            ]
+          },
           { text: "fiber", link: "/react/fiber" },
         ],
       },
