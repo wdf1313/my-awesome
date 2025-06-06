@@ -71,6 +71,7 @@ export default defineConfig({
             text: "hooks", link: "/react/hooks", items: [
               { text: "useState", link: "/react/useState" },
               { text: "useReducer", link: "/react/useReducer" },
+              { text: 'useContext', link: '/react/useContext' }
             ]
           },
           { text: "fiber", link: "/react/fiber" },
