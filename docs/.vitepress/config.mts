@@ -68,11 +68,13 @@ export default defineConfig({
           { text: "JSX", link: "/react/jsx" },
           { text: "strict-mode", link: "/react/strict-mode" },
           {
-            text: "hooks", link: "/react/hooks", items: [
+            text: "hooks",
+            link: "/react/hooks",
+            items: [
               { text: "useState", link: "/react/useState" },
               { text: "useReducer", link: "/react/useReducer" },
-              { text: 'useContext', link: '/react/useContext' }
-            ]
+              { text: "useContext", link: "/react/useContext" },
+            ],
           },
           { text: "fiber", link: "/react/fiber" },
         ],
@@ -80,6 +82,7 @@ export default defineConfig({
       {
         text: "Vue",
         items: [
+          { text: "vue2.x-notes", link: "/vue/vue2.x-notes" },
           { text: "reactivity", link: "/vue/reactivity" },
           { text: "render pipeline", link: "/vue/render-pipeline" },
         ],

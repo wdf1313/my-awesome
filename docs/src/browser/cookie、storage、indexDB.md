@@ -77,3 +77,19 @@ store.put({ id: 1, name: "李四" })
 // 删除数据
 store.delete(1)
 ```
+
+## 浏览器 Tab 之间 Cookie、localStorage、SessionStorage 共享情况
+
+1. Cookie 所有同源标签页共享
+
+Cookie 是存储在浏览器中的键值对，与域名绑定，并且会随着 HTTP 请求自动发送到服务器。
+
+2. localStorage 所有同源标签共享
+
+`localStorage` 的数据存储在浏览器中，按同源策略共享，并持久化（除非手动清除）
+
+3. sessionStorage
+
+每个标签的 `sessionStorage` 完全独立，即使同源也不共享。
+
+如果通过 `window.open()` 或 `<a target="_blank">` 打开新标签页，且新标签页与原标签页同源，则新标签页会继承原标签页的 `sessionStorage`
