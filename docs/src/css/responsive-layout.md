@@ -7,7 +7,7 @@
 ```html
 <meta name="viewport" conent="width=device-width, initial-scale=1.0">
 ```
-该 meta 标签告诉浏览器使用设备的宽度作为视口宽度，并且初始缩放比例为 1.0。
+该 meta (width=device-width)标签告诉浏览器使用设备的宽度作为视口宽度，并且(initial-scale=1.0)初始缩放比例为 1.0。
 
 ## 媒体查询 Media Queries
 
@@ -44,7 +44,8 @@
 ## 布局 
 
 ### Flexbox
-
+常见场景
+圣杯布局，使用流式布局，圣杯布局，多列布局，内容居中
 ### Grid
 
 ## 相对单位
@@ -95,7 +96,7 @@ div {
 ```
 
 
-#### rem(root em) - 相对于跟元素 html 的字体大小
+#### rem(root em) - 相对于根元素 html 的字体大小
 
 ```css
 html {
@@ -201,9 +202,12 @@ img {
 
 - `srcset="tablet.jpg"`：加载 tablet.jpg（可能是中等尺寸、适合横屏的图片）。
 
+## scale 
+ 适用场景：scale缩放主要用于大屏可视化的响应式场景.
 
+如果当前屏幕的宽高比(1920/1080)大于设计稿的宽高比(1440*1024),需要缩放的比例就是屏幕宽度初一设计稿高度(1080/1024)即transform:scale(1.05)
 
-
+如果当前屏幕宽高比(1200/900)小于设计稿的宽高比(1440*1024)，需要缩放的比例就是屏幕宽度除以设计稿宽度即transform：scale(0.83)
 
 
 

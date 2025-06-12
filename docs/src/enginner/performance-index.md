@@ -1,4 +1,9 @@
 # 性能指标
+## First Paint (FP)
+
+**首次绘制**
+
+浏览器首次在屏幕上**绘制像素**的时间点，即页面开始显示内容的时间
 
 ## First Contentful Paint (FCP)
 
@@ -8,6 +13,10 @@
 
 FCP 反映了用户第一次看到页面内容的速度。
 
+测量FCP的工具：lighthouse chrome DEvTools pageSpeed Insights
+
+降低FCP的手段：延迟加载渲染阻塞资源html/css/js/字体文件，利用webpack插件对这些资源进行压缩
+
 ## Largest Contentful Paint（LCP）
 
 **最大内容绘制**
@@ -16,6 +25,9 @@ FCP 反映了用户第一次看到页面内容的速度。
 
 直接影响用户的“页面加载完成”感知。
 
+测量lcp的工具：PageSpeed Insights
+
+优化lcp的手段：CDN负载均衡
 ## Time to Interactive（TTI）
 
 **可交互时间**
