@@ -15,7 +15,7 @@ function debounce(fn, delay = 300) {
   let timer = null
   return function (...args) {
     clearoutTimer(timer) // 清除上一次回调函数
-    timer = setTimeour(() => {
+    timer = setTimeout(() => {
       fn.apply(this, args) // 使用 apply 保证 this 和 参数正确
     }, delay)
   }
