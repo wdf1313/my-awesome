@@ -209,6 +209,13 @@ img {
 
 如果当前屏幕宽高比(1200/900)小于设计稿的宽高比(1440*1024)，需要缩放的比例就是屏幕宽度除以设计稿宽度即transform：scale(0.83)
 
+## 图片响应式
+```html
+<picture>
+ <source srcset ="xxx" media="(min-width:800px)">
+</picture>
+```
+
 
 
 
