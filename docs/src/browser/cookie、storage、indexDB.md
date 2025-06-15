@@ -4,6 +4,8 @@ Cookie、Web Storage、IndexDB 是浏览器提供的客户端存储方案，用�
 
 ## Cookie
 
+作用:用来做状态存储的，服务器将cookie返回给浏览器，方便浏览器方便用户进行其他业务的访问
+
 Cookie 大小限制约为 4KB，会自动随着请求发送到服务器。
 
 多用于存储会话标识（如 token）、用户信息等服务端需要读取的数据。
@@ -13,6 +15,16 @@ Cookie 大小限制约为 4KB，会自动随着请求发送到服务器。
 ```js
 document.cookie = "username=张三; expires=Fri, 31 Dec 2025 23:59:59 GMT; path=/"
 ```
+
+### 常见的属性
+  | ------------ | :----------------------------------: 
+| 属性         |      说明      |    
+| max_age     |    被保存的时间单位数      |    
+| expires     |           具体的过期时间，一个datetime对象或UNIX时间戳             |  
+| path        |           限制cookie只在给定的路径可用，默认为整个域名下路径都可用          |
+| domain      | 设置cookie可用的域名，默认为当前域名，子域名需要利用通配符domain=。当前域名 |  
+| sesure      |             为true只能在https下可用         | 
+| httponly    |        禁止客户端用js访问cookie（xss）       |  
 
 ## Web Storage
 
